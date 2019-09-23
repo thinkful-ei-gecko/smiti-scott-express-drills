@@ -95,4 +95,33 @@ app.get('/cipher', (req, res) => {
         return String.fromCharCode(shiftedInt);
     }).join('')
     res.send(encryptedText);
-})
+});
+
+app.get('/lotto', (req, res) => {
+
+    let numArr = [];
+
+    numArr = req.query.numbers;
+
+    numArr = numArr.map(num => parseInt(num));
+
+    numArr = numArr.filter(num => {
+        let randNum = Math.floor(Math.random() * Math.floor(20));
+        randNum++;
+        return num === randNum;
+    })
+
+    let results = '';
+
+    if (numArr.length === 6) {
+        results = 'big win';
+    } else if (numArr.length === 5) {
+        results = 'big-ish win';
+    } else if (numArr.length === 4) {
+        results = 'baby win';
+    } else {
+        results = 'lose'
+    }
+
+    res.send(results)
+});
